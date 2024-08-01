@@ -21,7 +21,6 @@ for filepath in filepaths:
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
     columns = [item.replace("_", " ").title() for item in df.columns]
 
-
     pdf.set_font("times", style="B", size=13)
     pdf.cell(w=30, h=10, txt=columns[0], align="L", border=1)
     pdf.cell(w=50, h=10, txt=columns[1], align="L", border=1)
@@ -36,5 +35,21 @@ for filepath in filepaths:
         pdf.cell(w=40, h=8, txt=str(row["amount_purchased"]), border=1)
         pdf.cell(w=40, h=8, txt=str(row["price_per_unit"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["total_price"]), ln=1, border=1)
+
+    pdf.set_font("times", size=10)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=50, h=8, txt="", border=1)
+    pdf.cell(w=40, h=8, txt="", border=1)
+    pdf.cell(w=40, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt=str(int(df["total_price"].sum())), ln=1, border=1)
+
+    pdf.set_font("times", style="B", size=13)
+    pdf.cell(w=0, h=8, txt=f"Total Price is {int(df["total_price"].sum())}", border=0, ln=1)\
+
+    pdf.set_font("times", style="B", size=13)
+    pdf.cell(w=25, h=8, txt=f"Python How", border=0)
+    pdf.image("pythonhow.png",w=10 )
+
+
 
     pdf.output(f"PDFs/{invoice_no}.pdf")
